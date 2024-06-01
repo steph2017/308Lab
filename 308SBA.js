@@ -29,5 +29,7 @@ const LSubmission = [];
 //   "score": number
 
 function getLearnerData(CourseInfo, AssignmentGroup, [LearnerSubmission]) {
+    let scoreArr = [];
 
-}
+    return scoreArr;
+};
