@@ -7,11 +7,30 @@ const CInfo = {
 };
 
 const AGroup = {
-    id: 0,
+    id: 89,
     name: "name",
     course_id: "course",
     group_weight: 0,
-    assignments: []
+    assignments: [
+        {
+            id: 1,
+            name: "Declare a Variable",
+            due_at: "2023-01-25",
+            points_possible: 50
+        },
+        {
+            id: 2,
+            name: "Write a Function",
+            due_at: "2023-02-27",
+            points_possible: 150
+        },
+        {
+            id: 3,
+            name: "Code the World",
+            due_at: "3156-11-15",
+            points_possible: 500
+        }
+    ]
 };
 
 const AInfo = {
@@ -21,15 +40,87 @@ const AInfo = {
     points_possible: 0
 };
 
-const LSubmission = [];
+const LSubmission = [
+    {
+        learner_id: 125,
+        assignment_id: 1,
+        submission: {
+            submitted_at: "2023-01-25",
+            score: 47
+        }
+    },
+    {
+        learner_id: 125,
+        assignment_id: 2,
+        submission: {
+            submitted_at: "2023-02-12",
+            score: 150
+        }
+    },
+    {
+        learner_id: 125,
+        assignment_id: 3,
+        submission: {
+            submitted_at: "2023-01-25",
+            score: 400
+        }
+    },
+    {
+        learner_id: 132,
+        assignment_id: 1,
+        submission: {
+            submitted_at: "2023-01-24",
+            score: 39
+        }
+    },
+    {
+        learner_id: 132,
+        assignment_id: 2,
+        submission: {
+            submitted_at: "2023-03-07",
+            score: 140
+        }
+    }
+];
+
+// function getLearnerData(course, ag, submissions) {
+//   // here, we would process this data to achieve the desired result.
+//   const result = [
+//     {
+//       id: 125,
+//       avg: 0.985, // (47 + 150) / (50 + 150)
+//       1: 0.94, // 47 / 50
+//       2: 1.0 // 150 / 150
+//     },
+//     {
+//       id: 132,
+//       avg: 0.82, // (39 + 125) / (50 + 150)
+//       1: 0.78, // 39 / 50
+//       2: 0.833 // late: (140 - 15) / 150
+//     }
+// ]
+// }
+
 // //   "learner_id": number,
 // "assignment_id": number,
 // "submission": {
 //   "submitted_at": Date string,
 //   "score": number
 
+// kk for this function, I would need to loop through an array of grades and for each iteration
+// i would need to average weighted points. I would need to select only matching points to average. This will require a filter 
+// And I would need to organize this by each learner id
 function getLearnerData(CourseInfo, AssignmentGroup, [LearnerSubmission]) {
     let scoreArr = [];
+    // maybe filter first? Filter assignment id in learner submission to ids within the assignment group
+    let validAssignmentIds = AssignmentGroup.assignments.map((x) => x.id);
 
+    // for (each in lea) {
+    //     const result = words.filter((word) => word.length > 6)
+
+    // }
     return scoreArr;
 };
+
+
+console.log(getLearnerData(CInfo, AGroup, LSubmission));
