@@ -69,7 +69,7 @@ const LSubmission = [
         learner_id: 132,
         assignment_id: 1,
         submission: {
-            submitted_at: "2023-01-24",
+            submitted_at: "2050-01-24",
             score: 39
         }
     },
@@ -116,11 +116,44 @@ const LSubmission = [
 //      if not due (due else) = do not average 
 //      if due & on time = average. if due and not on time (on time else) deduct 10% of possible point from the actual points earned.
 // 3. asignment id match
-function getLearnerData(CourseInfo, AssignmentGroup, [LearnerSubmission]) {
+// 4
+function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
     //Course info Validation
     if (CourseInfo.id !== AssignmentGroup.course_id) {
         return console.log("Assignment Group and Course provided do not match. Please review and try again.");
     }
+
+    //need to extract unique learner ids to be used in other functions:
+    let uniqueLearnerIDs = [];
+
+    LearnerSubmission.forEach((x) => {
+        if (uniqueLearnerIDs.includes(x.learner_id)) { }
+        else {
+            uniqueLearnerIDs.push(x.learner_id);
+        }
+    });
+
+    // SAme logic to extract unique assignment ids:
+
+    let uniqueAssignmentIds = [];
+
+    LearnerSubmission.forEach((x) => {
+        if (uniqueAssignmentIds.includes(x.assignment_id)) { }
+        else {
+            uniqueAssignmentIds.push(x.assignment_id);
+        }
+    });
+
+
+
+
+
+
+
+    // filter non due submissions out
+    //  
+    // let dueAssignments = LearnerSubmission.filter((x) => Date(x.submission.submitted_at) <= Date.now)
+
 
     let scoreArr = [];
     // maybe filter first? Filter assignment id in learner submission to ids within the assignment group
