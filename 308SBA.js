@@ -1,7 +1,7 @@
 // Declare 4 object data types
 
 const CInfo = {
-    id: 0,
+    id: 345,
     name: "name"
 
 };
@@ -9,7 +9,7 @@ const CInfo = {
 const AGroup = {
     id: 89,
     name: "name",
-    course_id: "course",
+    course_id: 345,
     group_weight: 0,
     assignments: [
         {
@@ -110,16 +110,31 @@ const LSubmission = [
 // kk for this function, I would need to loop through an array of grades and for each iteration
 // i would need to average weighted points. I would need to select only matching points to average. This will require a filter 
 // And I would need to organize this by each learner id
+// logic of validations (with rank):
+// 1. matching course info id with  assignment id: if assignmentgroup.courseid === courseinfo.id proceed else "Assignment group doesnt not match course Id. Please resubmit."
+// 2. assignment due date: if (due = due at date < time.now ); then if (on time = submit date <= due at , else late) else not due
+//      if not due (due else) = do not average 
+//      if due & on time = average. if due and not on time (on time else) deduct 10% of possible point from the actual points earned.
+// 3. asignment id match
 function getLearnerData(CourseInfo, AssignmentGroup, [LearnerSubmission]) {
+    //Course info Validation
+    if (CourseInfo.id !== AssignmentGroup.course_id) {
+        return console.log("Assignment Group and Course provided do not match. Please review and try again.");
+    }
+
     let scoreArr = [];
     // maybe filter first? Filter assignment id in learner submission to ids within the assignment group
     let validAssignmentIds = AssignmentGroup.assignments.map((x) => x.id);
+    //use .includes to validate id
 
-    // for (each in lea) {
+
+
+    // for (let eachSubmission of LearnerSubmission) {
     //     const result = words.filter((word) => word.length > 6)
 
     // }
     return scoreArr;
+
 };
 
 
