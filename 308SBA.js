@@ -181,29 +181,22 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
         }
     }
 
-    LearnerSubmission = LearnerSubmission.filter((x) => Date(x.submission.submitted_at) <= Date.now) //filter out assignments turnedin but not due.
+    // Now go through transformed learner submission array and print averages by learner id:
+
+    const scoreArr = [];
+    let thislearnerS = [];
+    for (learner of uniqueLearnerIDs) {
+        let printObj = {};
+        thislearnerS = NewLearnerSubmission.filter((x) => x.learner_id === learner); //reducing array to only matching the learner
+        printObj.avg = thislearnerS.reduce((x, y) => x + y.submission.score, 0); //testing for just sum for now, will complete calc
+        for (sub of thislearnerS) {
+            printObj[String(sub.assignment_id)] = (sub.submission.score) / (AssignmentGroup.assignments.find((x) => x.id == sub.assignment_id)).points_possible;
+        }
+        id: learner,
+            scoreArr.push(printObj);
+    }
 
 
-
-
-
-
-    // filter non due submissions out
-    //  
-    // let dueAssignments = 
-
-
-    let scoreArr = [];
-    // maybe filter first? Filter assignment id in learner submission to ids within the assignment group
-
-    //use .includes to validate id
-
-
-
-    // for (let eachSubmission of LearnerSubmission) {
-    //     const result = words.filter((word) => word.length > 6)
-
-    // }
     return scoreArr;
 
 };
