@@ -40,17 +40,17 @@ const AInfo = {
     points_possible: 0
 };
 
-const LSubmission = [
+const LSubmission = [ //assignment is due; late
     {
         learner_id: 125,
         assignment_id: 1,
         submission: {
-            submitted_at: "2023-01-25",
+            submitted_at: "2023-01-26",
             score: 47
         }
     },
     {
-        learner_id: 125,
+        learner_id: 125, //assignment is due; on time submission
         assignment_id: 2,
         submission: {
             submitted_at: "2023-02-12",
@@ -58,7 +58,7 @@ const LSubmission = [
         }
     },
     {
-        learner_id: 125,
+        learner_id: 125, //assignent is not due
         assignment_id: 3,
         submission: {
             submitted_at: "2023-01-25",
@@ -66,7 +66,7 @@ const LSubmission = [
         }
     },
     {
-        learner_id: 132,
+        learner_id: 132, //assignment is due; late!
         assignment_id: 1,
         submission: {
             submitted_at: "2050-01-24",
@@ -74,7 +74,7 @@ const LSubmission = [
         }
     },
     {
-        learner_id: 132,
+        learner_id: 132, //assignment is due; late!
         assignment_id: 2,
         submission: {
             submitted_at: "2023-03-07",
@@ -82,6 +82,14 @@ const LSubmission = [
         }
     }
 ];
+
+// console.log(LSubmission[3].submission.submitted_at);
+// let friend = new Date(LSubmission[3].submission.submitted_at);
+// console.log(friend);
+// console.log(Date.now);
+// // console.log(friend > Date.now);
+// console.log(Date(AGroup.assignments[0].due_at));
+// console.log(Date("2023-01-25"));
 
 // function getLearnerData(course, ag, submissions) {
 //   // here, we would process this data to achieve the desired result.
@@ -144,6 +152,36 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
         }
     });
 
+    //extract valid assignment ids:
+    let validAssignmentIds = AssignmentGroup.assignments.map((x) => x.id);
+
+    // Similar logic to Transform LS for due date considerations
+    const NewLearnerSubmission = [];
+    for (j = 0; j < LearnerSubmission.length; j++) {
+        for (i = 0; i < validAssignmentIds.length; i++) {
+            if (LearnerSubmission[j].assignment_id !== validAssignmentIds[i]) {
+                continue
+            }
+            else {
+                if (new Date(AssignmentGroup.assignments[i].due_at) > Date.now()) { // future due date validation
+                    continue
+                }
+                else if (new Date(LearnerSubmission[j].submission.submitted_at) <= (new Date(AssignmentGroup.assignments[i].due_at))) { //on time validation
+                    NewLearnerSubmission.push(LearnerSubmission[j]);
+
+                }
+                else {
+                    LearnerSubmission[j].submission.score = LearnerSubmission[j].submission.score - (AssignmentGroup.assignments[i].points_possible / 10); //deduct points for late
+                    NewLearnerSubmission.push(LearnerSubmission[j]);
+                }
+            }
+
+
+
+        }
+    }
+
+    LearnerSubmission = LearnerSubmission.filter((x) => Date(x.submission.submitted_at) <= Date.now) //filter out assignments turnedin but not due.
 
 
 
@@ -152,12 +190,12 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
 
     // filter non due submissions out
     //  
-    // let dueAssignments = LearnerSubmission.filter((x) => Date(x.submission.submitted_at) <= Date.now)
+    // let dueAssignments = 
 
 
     let scoreArr = [];
     // maybe filter first? Filter assignment id in learner submission to ids within the assignment group
-    let validAssignmentIds = AssignmentGroup.assignments.map((x) => x.id);
+
     //use .includes to validate id
 
 
