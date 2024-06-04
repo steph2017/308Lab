@@ -83,37 +83,8 @@ const LSubmission = [ //assignment is due; late
     }
 ];
 
-// console.log(LSubmission[3].submission.submitted_at);
-// let friend = new Date(LSubmission[3].submission.submitted_at);
-// console.log(friend);
-// console.log(Date.now);
-// // console.log(friend > Date.now);
-// console.log(Date(AGroup.assignments[0].due_at));
-// console.log(Date("2023-01-25"));
 
-// function getLearnerData(course, ag, submissions) {
-//   // here, we would process this data to achieve the desired result.
-//   const result = [
-//     {
-//       id: 125,
-//       avg: 0.985, // (47 + 150) / (50 + 150)
-//       1: 0.94, // 47 / 50
-//       2: 1.0 // 150 / 150
-//     },
-//     {
-//       id: 132,
-//       avg: 0.82, // (39 + 125) / (50 + 150)
-//       1: 0.78, // 39 / 50
-//       2: 0.833 // late: (140 - 15) / 150
-//     }
-// ]
-// }
 
-// //   "learner_id": number,
-// "assignment_id": number,
-// "submission": {
-//   "submitted_at": Date string,
-//   "score": number
 
 // kk for this function, I would need to loop through an array of grades and for each iteration
 // i would need to average weighted points. I would need to select only matching points to average. This will require a filter 
@@ -206,7 +177,11 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
         printObj.avg = (thislearnerS.reduce((x, y) => x + y.submission.score, 0)) / (NewAssignmentGroupAssignments.reduce((x, y) => x + y, 0)); // sum actual points and possible  then divide
 
         for (sub of thislearnerS) {
-            printObj[String(sub.assignment_id)] = (sub.submission.score) / (AssignmentGroup.assignments.find((x) => x.id == sub.assignment_id)).points_possible;
+            try {
+                printObj[String(sub.assignment_id)] = (sub.submission.score) / (AssignmentGroup.assignments.find((x) => x.id == sub.assignment_id)).points_possible;
+            } catch (error) {
+                console.error(error);
+            }
         }
 
         scoreArr.push(printObj);
