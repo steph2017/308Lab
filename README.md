@@ -1,60 +1,34 @@
-308Lab
-This project builds 
+# 308Lab
+This project builds and executes an instance of a function getLearnerData(), that accepts inputs related to a group of assignments and a learner's submission of the assignment including submission date & score. The function then runs calculations and outputs a set of data organized by each learner.
 
-Table of Contents
-Installation
-Usage
-Features
-Contributing
-License
-Contact
-Installation
-Instructions on how to install and set up the project.
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Acknowledgements](#acknowledgements)
+  
 
-bash
-Copy code
-# Clone the repository
+
+## Installation
+
+##### Clone the repository
+
 git clone https://github.com/yourusername/your-repo-name.git
 
-# Navigate to the project directory
+##### Navigate to the project directory
 cd your-repo-name
 
-# Install dependencies
-npm install
-# or
-pip install -r requirements.txt
 
-# Set up environment variables (if applicable)
-cp .env.example .env
-Usage
-How to use the project. Include code examples and screenshots where necessary.
+## Features
 
-bash
-Copy code
-# Start the project
-npm start
-# or
-python main.py
-Features
-List of features and functionalities of the project.
+- Has logic to exclude/adjust relevant scores from the average, such as assignments turned in but not yet due and late assignments that have a score penalty
+- Considers the weight of the assignment toward the overall grade in making the average
+- Provides individal grades as well as overall score.
+ 
+## Usage
+- Simply provide your own inputs in the variables CInfo, AGroup, LSubmission without changing any property / variable names. Then save and run.
 
-Feature 1
-Feature 2
-Feature 3
-Contributing
-Guidelines for contributing to the project.
-
-Fork the repository
-Create your feature branch (git checkout -b feature/AmazingFeature)
-Commit your changes (git commit -m 'Add some AmazingFeature')
-Push to the branch (git push origin feature/AmazingFeature)
-Open a Pull Request
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-Contact
-Your Name - your.email@example.com
-
-Project Link: https://github.com/yourusername/your-repo-name
-
-Feel free to adjust the sections and content as needed for your specific project.
+## Acknowledgements
+This was made possible by:
+- Instruction from [Tishana](https://github.com/tishana) and [Manara](https://github.com/Manara-Ali) under the [Per Scholas Software Engineering Immersive]https://perscholas.org/courses/software-engineer/
+- Helpful troubleshooting resources such as [MDN Web Docs](https://developer.mozilla.org/en-US/) and [Stack Overflow](https://stackoverflow.com/).
