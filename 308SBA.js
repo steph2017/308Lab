@@ -203,7 +203,7 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
         thislearnerS = NewLearnerSubmission.filter((x) => x.learner_id === learner); //reducing array to only matching the learner
 
         printObj.id = learner;
-        printObj.avg = (thislearnerS.reduce((x, y) => x + y.submission.score, 0)) / (NewAssignmentGroupAssignments.reduce((x, y) => x + y.points_possible, 0)); // sum actual points and possible  then divide
+        printObj.avg = (thislearnerS.reduce((x, y) => x + y.submission.score, 0)) / (NewAssignmentGroupAssignments.reduce((x, y) => x + y, 0)); // sum actual points and possible  then divide
 
         for (sub of thislearnerS) {
             printObj[String(sub.assignment_id)] = (sub.submission.score) / (AssignmentGroup.assignments.find((x) => x.id == sub.assignment_id)).points_possible;
