@@ -157,6 +157,7 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
 
     // Similar logic to Transform LS for due date considerations
     const NewLearnerSubmission = [];
+    const NewAssignmentGroupAssignments = []; //also Transform AG.assignments for due date considerations
     for (j = 0; j < LearnerSubmission.length; j++) {
         for (i = 0; i < validAssignmentIds.length; i++) {
             if (LearnerSubmission[j].assignment_id !== validAssignmentIds[i]) {
@@ -174,12 +175,24 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
                     LearnerSubmission[j].submission.score = LearnerSubmission[j].submission.score - (AssignmentGroup.assignments[i].points_possible / 10); //deduct points for late
                     NewLearnerSubmission.push(LearnerSubmission[j]);
                 }
+
             }
 
 
 
         }
     }
+
+    for (i = 0; i < AssignmentGroup.assignments.length; i++) {
+        if (new Date(AssignmentGroup.assignments[i].due_at) > Date.now()) { // future due date validation
+            continue
+        }
+        else {
+            NewAssignmentGroupAssignments.push(AssignmentGroup.assignments[i].points_possible);
+        }
+    }
+
+
 
     // Now go through transformed learner submission array and print averages by learner id:
 
@@ -190,7 +203,7 @@ function getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmission) {
         thislearnerS = NewLearnerSubmission.filter((x) => x.learner_id === learner); //reducing array to only matching the learner
 
         printObj.id = learner;
-        printObj.avg = (thislearnerS.reduce((x, y) => x + y.submission.score, 0)) / (AssignmentGroup.assignments.reduce((x, y) => x + y.points_possible, 0)); // sum actual points and possible  then divide
+        printObj.avg = (thislearnerS.reduce((x, y) => x + y.submission.score, 0)) / (NewAssignmentGroupAssignments.reduce((x, y) => x + y.points_possible, 0)); // sum actual points and possible  then divide
 
         for (sub of thislearnerS) {
             printObj[String(sub.assignment_id)] = (sub.submission.score) / (AssignmentGroup.assignments.find((x) => x.id == sub.assignment_id)).points_possible;
